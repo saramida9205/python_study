@@ -72,7 +72,32 @@ function loadChapter(id) {
         <h1 class="chapter-title">${chapter.title}</h1>
         <p class="chapter-desc">${chapter.description}</p>
         <div class="content-body">${chapter.content}</div>
+        <div class="nav-buttons" id="nav-buttons"></div>
     `;
+
+    // Process code blocks for Copy button
+    document.querySelectorAll('.content-body pre code').forEach((codeBlock) => {
+        const pre = codeBlock.parentElement;
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-btn';
+        copyBtn.textContent = 'Copy';
+
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(codeBlock.innerText);
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+            } catch (err) {
+                console.error('Copy failed', err);
+                copyBtn.textContent = 'Failed';
+            }
+        });
+
+        pre.appendChild(copyBtn);
+    });
+
+    // Render Nav Buttons
+    renderNavigationButtons(id);
 
     // Update Editor
     codeEditor.value = chapter.defaultCode;
@@ -80,6 +105,49 @@ function loadChapter(id) {
     // Clear Output (Optional, maybe user wants to keep history?)
     // outputConsole.innerHTML = '';
     // appendOutput(`--- Loaded: ${chapter.title} ---`, true);
+}
+
+function renderNavigationButtons(currentId) {
+    const currentIndex = chapters.findIndex(c => c.id === currentId);
+    if (currentIndex === -1) return;
+
+    const navContainer = document.getElementById('nav-buttons');
+    navContainer.innerHTML = ''; // Clear previous buttons
+    const prevChapter = chapters[currentIndex - 1];
+    const nextChapter = chapters[currentIndex + 1];
+
+    // Prev Button
+    const prevBtn = document.createElement('a');
+    prevBtn.className = 'btn-nav';
+    if (prevChapter) {
+        prevBtn.href = "#";
+        prevBtn.innerHTML = `&larr; 이전: ${prevChapter.title.split('.')[0]}`; // Shorten title
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadChapter(prevChapter.id);
+        });
+    } else {
+        prevBtn.classList.add('disabled');
+        prevBtn.innerHTML = `&larr; 이전`;
+    }
+
+    // Next Button
+    const nextBtn = document.createElement('a');
+    nextBtn.className = 'btn-nav';
+    if (nextChapter) {
+        nextBtn.href = "#";
+        nextBtn.innerHTML = `다음: ${nextChapter.title.split('.')[0]} &rarr;`; // Shorten title
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadChapter(nextChapter.id);
+        });
+    } else {
+        nextBtn.classList.add('disabled');
+        nextBtn.innerHTML = `다음 &rarr;`;
+    }
+
+    navContainer.appendChild(prevBtn);
+    navContainer.appendChild(nextBtn);
 }
 
 function appendOutput(msg, isSystem = false) {
