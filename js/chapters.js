@@ -1,5 +1,56 @@
 const chapters = [
     {
+        id: "install",
+        title: "0. 파이썬 설치 및 환경 설정",
+        description: "파이썬 개발을 시작하기 위한 준비 과정입니다.",
+        content: `
+            <h3>1. 파이썬 설치하기</h3>
+            <p>공식 홈페이지(<a href="https://www.python.org" target="_blank" style="color:var(--accent-color)">python.org</a>)에서 운영체제에 맞는 최신 버전을 다운로드하여 설치합니다.</p>
+            <div class="tip-box">
+                <strong>Tip:</strong> 설치 시 <code>Add Python to PATH</code> 옵션을 반드시 체크해야 터미널에서 파이썬을 쉽게 실행할 수 있습니다.
+            </div>
+
+            <h3>2. IDE(통합 개발 환경) 설치</h3>
+            <p>코드를 편리하게 작성하기 위해 <strong>VS Code(Visual Studio Code)</strong> 사용을 추천합니다. 무료이며 강력한 기능을 제공합니다.</p>
+            <ul>
+                <li>VS Code 설치 후 'Python' 확장 프로그램(Extension)을 설치하세요.</li>
+            </ul>
+
+            <h3>3. 로컬에서 실행하기</h3>
+            <p>터미널(CMD)을 열고 <code>python --version</code>을 입력하여 설치가 잘 되었는지 확인해보세요.</p>
+        `,
+        defaultCode: `# 이 사이트에서는 별도의 설치 없이
+# 브라우저에서 바로 코드를 실행할 수 있습니다.
+print("설치 없이 바로 실행되는 파이썬!")`
+    },
+    {
+        id: "execution_principle",
+        title: "0-1. 파이썬의 실행 원리",
+        description: "컴퓨터가 파이썬 코드를 이해하고 실행하는 과정을 알아봅니다.",
+        content: `
+            <h3>인터프리터 언어 (Interpreter Language)</h3>
+            <p>파이썬은 <strong>인터프리터 언어</strong>입니다. 코드를 한 줄씩 읽어가며 즉시 실행하는 방식입니다. 반면 C나 Java 같은 컴파일 언어는 실행 전 전체 코드를 기계어 파일로 번역하는 과정이 필요합니다.</p>
+
+            <h3>실행 과정 확인</h3>
+            <ol>
+                <li><strong>소스 코드 (.py):</strong> 사람이 작성한 코드</li>
+                <li><strong>바이트 코드 (.pyc):</strong> 파이썬이 이해하기 쉬운 중간 형태 (컴파일)</li>
+                <li><strong>PVM (Python Virtual Machine):</strong> 바이트 코드를 운영체제에 맞춰 실행</li>
+            </ol>
+            
+            <p>이 웹사이트는 <strong>Pyodide</strong>라는 기술을 사용하여, 웹 브라우저 안에서 파이썬 가상 머신을 돌리는 원리로 작동합니다.</p>
+        `,
+        defaultCode: `import sys
+
+# 현재 실행 중인 파이썬 버전 확인
+print("Python Version Info:")
+print(sys.version)
+
+# 인터프리터가 한 줄씩 실행함을 증명
+print("첫 번째 줄 실행")
+print("두 번째 줄 실행")`
+    },
+    {
         id: "intro",
         title: "1. Python 소개 & Hello World",
         description: "프로그래밍의 첫 걸음, 파이썬의 세계에 오신 것을 환영합니다.",
@@ -118,5 +169,109 @@ msg2 = greet("Younghee", "Evening")
 
 print(msg1)
 print(msg2)`
+    },
+    {
+        id: "exceptions",
+        title: "7. 예외 처리 (Try/Except)",
+        description: "프로그램 실행 중 발생하는 오류(에러)를 우아하게 처리하는 방법입니다.",
+        content: `
+            <h3>Try - Except 구문</h3>
+            <p>에러가 발생할 수 있는 코드를 <code>try</code> 블록에 넣고, 에러 발생 시 실행할 코드를 <code>except</code> 블록에 넣습니다. 이를 통해 프로그램이 강제 종료되는 것을 막을 수 있습니다.</p>
+
+            <h3>예시</h3>
+            <pre><code>try:
+    # 에러가 발생할 수 있는 코드
+    result = 10 / 0
+except ZeroDivisionError:
+    # 에러 발생 시 실행됨
+    print("0으로 나눌 수 없습니다.")
+</code></pre>
+        `,
+        defaultCode: `try:
+    numbers = [1, 2, 3]
+    # 존재하지 않는 인덱스 접근 (IndexError 발생)
+    print(numbers[5])
+except IndexError:
+    print("오류 발생: 리스트의 범위를 벗어났습니다!")
+except Exception as e:
+    print(f"알 수 없는 오류: {e}")
+finally:
+    print("이 코드는 성공/실패 여부와 상관없이 항상 실행됩니다.")`
+    },
+    {
+        id: "oop",
+        title: "8. 객체 지향 프로그래밍 (Class)",
+        description: "현실 세계의 사물을 코드로 모델링하는 객체 지향(OOP)의 기초를 배웁니다.",
+        content: `
+            <h3>클래스(Class)와 객체(Object)</h3>
+            <p><strong>클래스</strong>는 붕어빵 틀(설계도)이고, <strong>객체</strong>는 그 틀로 찍어낸 붕어빵(실체)입니다.</p>
+            
+            <h3>__init__ 생성자</h3>
+            <p>객체가 생성될 때 처음 실행되는 함수로, 객체의 초기 상태(속성)를 설정합니다.</p>
+        `,
+        defaultCode: `class Dog:
+    # 생성자: 강아지의 이름과 나이를 설정
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    # 메서드: 강아지의 행동
+    def bark(self):
+        return f"{self.name}가 멍멍 짖습니다!"
+
+# 객체 생성 (인스턴스화)
+my_dog = Dog("바둑이", 3)
+your_dog = Dog("초코", 2)
+
+print(my_dog.bark())
+print(f"{your_dog.name}는 {your_dog.age}살입니다.")`
+    },
+    {
+        id: "modules",
+        title: "9. 모듈과 패키지",
+        description: "남이 만들어둔 유용한 기능을 가져와서 사용하는 방법을 배웁니다.",
+        content: `
+            <h3>Import 사용하기</h3>
+            <p>파이썬은 강력한 표준 라이브러리를 제공합니다. <code>import</code> 키워드를 사용해 필요한 모듈을 불러올 수 있습니다.</p>
+
+            <ul>
+                <li><code>math</code>: 수학 관련 함수</li>
+                <li><code>random</code>: 난수 생성</li>
+                <li><code>datetime</code>: 날짜와 시간</li>
+            </ul>
+        `,
+        defaultCode: `import math
+import random
+from datetime import datetime
+
+print(f"원주율(PI): {math.pi}")
+print(f"루트 16: {math.sqrt(16)}")
+
+print(f"주사위 숫자: {random.randint(1, 6)}")
+
+now = datetime.now()
+print(f"현재 시간: {now.year}년 {now.month}월 {now.day}일")`
+    },
+    {
+        id: "advanced",
+        title: "10. 고급 기능 (Lambda & Comprehension)",
+        description: "파이썬을 더 파이썬답게(Pythonic) 사용하는 고급 문법입니다.",
+        content: `
+            <h3>람다(Lambda) 함수</h3>
+            <p>이름 없는 간단한 함수를 한 줄로 만들 때 사용합니다.</p>
+            
+            <h3>리스트 컴프리헨션 (List Comprehension)</h3>
+            <p>반복문과 조건문을 사용해 리스트를 아주 간결하게 만드는 파이썬만의 강력한 기능입니다.</p>
+        `,
+        defaultCode: `# Lambda 예제
+add = lambda x, y: x + y
+print(f"Lambda 덧셈: {add(5, 3)}")
+
+# List Comprehension 예제
+# 1부터 10까지 숫자 중 짝수만 제곱해서 리스트 만들기
+evens_squared = [x**2 for x in range(1, 11) if x % 2 == 0]
+
+print("짝수의 제곱 리스트:")
+print(evens_squared)`
     }
 ];
