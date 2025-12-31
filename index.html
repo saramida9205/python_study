@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyStudy - Python 학습 플랫폼</title>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Pyodide CDN -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+
+<body>
+    <!-- Mobile Menu Button -->
+    <button id="menu-toggle" class="menu-toggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">
+            <svg width="28" height="28" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0Z"
+                    fill="#306998" />
+                <path d="M22 9H13V13H22V22H15V18H11V26H19C20.6569 26 22 24.6569 22 23V9Z" fill="#FFD43B" />
+                <path d="M8 21H17V17H8V8H15V12H19V4H11C9.34315 4 8 5.34315 8 7V21Z" fill="#FFD43B" />
+            </svg>
+            <span>PyStudy</span>
+        </div>
+        <ul class="nav-links" id="chapter-list">
+            <!-- Dynamic Chapter Links will be inserted here -->
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Learning Content -->
+        <main class="content-area">
+            <div id="content-display">
+                <!-- Dynamic Content will be loaded here -->
+            </div>
+        </main>
+
+        <!-- Code Playground -->
+        <aside class="playground-area">
+            <div class="playground-header">
+                <span class="playground-title">Code Playground</span>
+                <button id="run-btn" class="run-btn" disabled>
+                    <span class="btn-text">실행 (Run)</span>
+                </button>
+            </div>
+
+            <div class="editor-container">
+                <textarea id="code-editor" spellcheck="false"></textarea>
+            </div>
+
+            <div class="output-container">
+                <div class="output-header">
+                    실행 결과 (Output)
+                </div>
+                <div id="output-console">
+                    <div class="output-line" style="color: #64748b;">Python 런타임 로딩 중...</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="spinner"></div>
+            <div style="color: var(--accent-color); font-weight: 500;">Python 환경 준비 중...</div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/chapters.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
